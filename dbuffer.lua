@@ -126,7 +126,6 @@ function B.buffers_to_string( table_of_buffers, pattern )
    for _, buffer in pairs( table_of_buffers ) do
       height = #buffer.lines > height and #buffer.lines or height
    end
-   print( height )
    for i, buffer in pairs( table_of_buffers ) do 
       -- if buffer is the height standard or is TOP_FAVOR it starts at 0
       if( #buffer.lines == height or buffer.favor == TOP_FAVOR ) then
