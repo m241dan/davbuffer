@@ -125,8 +125,7 @@ function B.buffers_to_string( table_of_buffers, pattern )
    local iterators = {}
    -- need to find the buffer with the greatest "heigth"
    for _, buffer in pairs( table_of_buffers ) do
-      -- have to +1 because buffers start at 1 not 0
-      height = ( #buffer.lines > height and #buffer.lines or height )
+      height = #buffer.lines > height and #buffer.lines or height
    end
    for i, buffer in pairs( table_of_buffers ) do 
       -- if buffer is the height standard or is TOP_FAVOR it starts at 0
@@ -134,7 +133,7 @@ function B.buffers_to_string( table_of_buffers, pattern )
          starting_height[i] = 1
       else
          -- otherwise, start at the difference
-         starting_height[i] = height - #buffer.lines
+         starting_height[i] = ( height + 1 ) - #buffer.lines -- you have to add 1 because there is no line at 0...
       end
 
       -- now, if its mid favor, this numnber needs to be divided by 2
@@ -147,7 +146,7 @@ function B.buffers_to_string( table_of_buffers, pattern )
 
    -- now we need to prepare each buffers string
    -- then insert it into output after creating it with our pattern
-   for h = 1, (height+1), 1 do
+   for h = 1, height, 1 do
       for i, buffer in pairs( table_of_buffers ) do
          if( starting_height[i] <= h ) then
             prepared_string[i] = buffer.lines[iterators[i]] or string.rep( " ", buffer.width )
