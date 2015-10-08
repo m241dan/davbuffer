@@ -74,9 +74,10 @@ function B:parse( str )
          if( t[i] == ' ' ) then
             t[i] = '\n'
             c = 0
+            aw = self.width
             goto parsestart
          else
-            if( lastspace > i - aw ) then
+            if( lastspace > ( i - aw ) ) then
                t[lastspace] = '\n'
                i = lastspace + 1
             else
@@ -96,7 +97,7 @@ function B:parse( str )
 
    
    local newstr = table.concat( t, "" )
-   newstr:gsub( "(.*)\n", function( ln ) table.insert( self.lines, #self.lines+1, ln ); end )
+   newstr:gsub( "(.-)\n", function( ln ) self.lines[#self.lines+1] = ln; end )
    return true
 end
 
@@ -124,12 +125,13 @@ function B.buffers_to_string( table_of_buffers, pattern )
    local iterators = {}
    -- need to find the buffer with the greatest "heigth"
    for _, buffer in pairs( table_of_buffers ) do
-      height = #buffer.lines > height and #buffer.lines or height
+      -- have to +1 because buffers start at 1 not 0
+      height = ( #buffer.lines > height and #buffer.lines or height )
    end
    for i, buffer in pairs( table_of_buffers ) do 
       -- if buffer is the height standard or is TOP_FAVOR it starts at 0
       if( #buffer.lines == height or buffer.favor == TOP_FAVOR ) then
-         starting_height[i] = 0
+         starting_height[i] = 1
       else
          -- otherwise, start at the difference
          starting_height[i] = height - #buffer.lines
@@ -140,13 +142,12 @@ function B.buffers_to_string( table_of_buffers, pattern )
       if( buffer.favor == MID_FAVOR ) then
          starting_height[i] = starting_height[i] / 2
       end
-      iterators[i] = 0
+      iterators[i] = 1
    end
 
    -- now we need to prepare each buffers string
    -- then insert it into output after creating it with our pattern
-   for h = 0, height, 1 do
-      print( h )
+   for h = 1, (height+1), 1 do
       for i, buffer in pairs( table_of_buffers ) do
          if( starting_height[i] <= h ) then
             prepared_string[i] = buffer.lines[iterators[i]] or string.rep( " ", buffer.width )
