@@ -1,4 +1,4 @@
-Buffer = require( "objects/dbuffer" )
+Buffer = require( "dbuffer" )
 
 width = 25
 astring = "this #rjust has \r\nto be a #nlong string, eeeeeeeeeeeeee#neeeeeeeeeeee#r#beeeeeeeeeeeeeeeeeeeeeeeee#deeeeeeeeeeeeeeeeeeeeeeeeeeeeee prefer#dably\r\n one t#nhat is about... oh I #n#r#zdunno, 30+ char#na#tcters\r\n\r\n long."

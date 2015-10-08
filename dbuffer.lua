@@ -48,7 +48,7 @@ function B:parse( str )
    local str = str:gsub( '\n\r', '\n' )
    local i, c, aw, lastspace = 1, 0, self.width, 0
    local t = {}
-   str:gsub( ".", function( c ) table.insert( t, #t+1, c ); end )
+   str:gsub( ".", function( char ) table.insert( t, #t+1, char ); end )
 
    repeat
       ::parsestart::
@@ -116,9 +116,53 @@ B.__tostring = function ( buffer )
    return table.concat( buffer.lines, "\n" )
 end
 
-function B.buffers_to_string( ... )
+function B.buffers_to_string( table_of_buffers, pattern )
    local output = {}
-   return nil   
+   local height = 0
+   local starting_height = {}
+   local prepared_string = {}
+   local iterators = {}
+   -- need to find the buffer with the greatest "heigth"
+   for _, buffer in pairs( table_of_buffers ) do
+      height = #buffer.lines > height and #buffer.lines or height
+   end
+   print( height )
+   for i, buffer in pairs( table_of_buffers ) do 
+      -- if buffer is the height standard or is TOP_FAVOR it starts at 0
+      if( #buffer.lines == height or buffer.favor == TOP_FAVOR ) then
+         starting_height[i] = 0
+      else
+         -- otherwise, start at the difference
+         starting_height[i] = height - #buffer.lines
+      end
+
+      -- now, if its mid favor, this numnber needs to be divided by 2
+      -- bottom favor does not need to be touched, the difference is enough
+      if( buffer.favor == MID_FAVOR ) then
+         starting_height[i] = starting_height[i] / 2
+      end
+      iterators[i] = 0
+   end
+
+   -- now we need to prepare each buffers string
+   -- then insert it into output after creating it with our pattern
+   for h = 0, height, 1 do
+      print( h )
+      for i, buffer in pairs( table_of_buffers ) do
+         if( starting_height[i] <= h ) then
+            prepared_string[i] = buffer.lines[iterators[i]] or string.rep( " ", buffer.width )
+            iterators[i] = iterators[i] + 1
+            if( #prepared_string[i] < buffer.width ) then
+               prepared_string[i] = prepared_string[i] .. string.rep( " ", buffer.width - #prepared_string[i] )
+            end
+         else
+            prepared_string[i] = string.rep( " ", buffer.width )
+         end
+      end
+      output[#output+1] = string.format( pattern, table.unpack( prepared_string ) )
+   end
+
+   return table.concat( output, '\n' )
 end
 
 return B
