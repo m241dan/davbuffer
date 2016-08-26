@@ -194,7 +194,7 @@ function B.colorize( str )
    str = str:gsub( COLOR_CHAR .. "(.)", function( c )
       return color_tab[c] or c
    end )
-   return str
+   return str .. string.char(27) .. "[0m"
 end
 
 return B

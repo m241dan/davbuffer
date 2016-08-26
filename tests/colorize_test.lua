@@ -2,4 +2,4 @@
 
 local Buffer = require( "dbuffer" )
 
-print( Buffer.colorize( "#bBe yo!#n" ) )
+print( Buffer.colorize( "#bBe yo!" ) )
