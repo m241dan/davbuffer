@@ -8,7 +8,7 @@ local B = {}
 TOP_FAVOR = 1
 BOT_FAVOR = 2
 MID_FAVOR = 3
-
+COLOR_CHAR = "#"
 ---------------------------------------------
 -- Davenge Buffer Helper Methods           --
 -- Written by Daniel R. Koris(aka Davenge) --
@@ -17,7 +17,7 @@ MID_FAVOR = 3
 -- get substring at desired length, take into account colors and expand until we get the false length created by the color tags
 local function getsubstr_color( str, length, ecc ) -- ecc expected color count
    local substr = str:sub( 1, length )
-   local _ ,cc = substr:gsub( "#.", "" )
+   local _ ,cc = substr:gsub( COLOR_CHAR .. ".", "" )
    print( string.format( "str = %s expectation = %d",substr, ecc ) )
    if( cc ~= ecc ) then
       return getsubstr_color( str, ( length + cc * 2 ) - 1, cc )
@@ -52,7 +52,7 @@ function B:parse( str )
 
    repeat
       ::parsestart::
-      if( t[i] == '#' ) then -- test for color, if color expand c by two but also expand our artificial width by two, inc by two
+      if( t[i] == COLOR_CHAR ) then -- test for color, if color expand c by two but also expand our artificial width by two, inc by two
          i = i + 2
          aw = aw + 2 
          c = c + 2
