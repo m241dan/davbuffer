@@ -14,26 +14,26 @@ local color_tab = {
    --reset
    n = string.char(27) .. "[0m",
    -- grey / dark grey
-   z = string.char(27) .. "[0:37m",
-   Z = string.char(27) .. "[1:37m",
+   z = string.char(27) .. "[0;37m",
+   Z = string.char(27) .. "[1;37m",
    -- cyan
-   c = string.char(27) .. "[0:36m",
-   C = string.char(27) .. "[1:36m",
+   c = string.char(27) .. "[0;36m",
+   C = string.char(27) .. "[1;36m",
    -- megenta
-   m = string.char(27) .. "[0:35m",
-   M = string.char(27) .. "[1:35m",
+   m = string.char(27) .. "[0;35m",
+   M = string.char(27) .. "[1;35m",
    -- blue
-   b = string.char(27) .. "[0:34m",
-   B = string.char(27) .. "[1:34m",
+   b = string.char(27) .. "[0;34m",
+   B = string.char(27) .. "[1;34m",
    -- yellow
-   y = string.char(27) .. "[0:33m",
-   Y = string.char(27) .. "[1:33m",
+   y = string.char(27) .. "[0;33m",
+   Y = string.char(27) .. "[1;33m",
    -- green
-   g = string.char(27) .. "[0:32m",
-   G = string.char(27) .. "[1:32m",
+   g = string.char(27) .. "[0;32m",
+   G = string.char(27) .. "[1;32m",
    -- red
-   r = string.char(27) .. "[0:31m",
-   R = string.char(27) .. "[1:31m",
+   r = string.char(27) .. "[0;31m",
+   R = string.char(27) .. "[1;31m",
 }
 
 ---------------------------------------------
