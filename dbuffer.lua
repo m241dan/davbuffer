@@ -9,31 +9,32 @@ TOP_FAVOR = 1
 BOT_FAVOR = 2
 MID_FAVOR = 3
 COLOR_CHAR = "#"
+COLOR_ESC = string.char(27)
 
 local color_tab = {
    --reset
-   n = string.char(27) .. "[0m",
+   n = COLOR_ESC .. "[0m",
    -- grey / dark grey
-   z = string.char(27) .. "[0;37m",
-   Z = string.char(27) .. "[1;37m",
+   z = COLOR_ESC .. "[0;37m",
+   Z = COLOR_ESC .. "[1;37m",
    -- cyan
-   c = string.char(27) .. "[0;36m",
-   C = string.char(27) .. "[1;36m",
+   c = COLOR_ESC .. "[0;36m",
+   C = COLOR_ESC .. "[1;36m",
    -- megenta
-   m = string.char(27) .. "[0;35m",
-   M = string.char(27) .. "[1;35m",
+   m = COLOR_ESC .. "[0;35m",
+   M = COLOR_ESC .. "[1;35m",
    -- blue
-   b = string.char(27) .. "[0;34m",
-   B = string.char(27) .. "[1;34m",
+   b = COLOR_ESC .. "[0;34m",
+   B = COLOR_ESC .. "[1;34m",
    -- yellow
-   y = string.char(27) .. "[0;33m",
-   Y = string.char(27) .. "[1;33m",
+   y = COLOR_ESC .. "[0;33m",
+   Y = COLOR_ESC .. "[1;33m",
    -- green
-   g = string.char(27) .. "[0;32m",
-   G = string.char(27) .. "[1;32m",
+   g = COLOR_ESC .. "[0;32m",
+   G = COLOR_ESC .. "[1;32m",
    -- red
-   r = string.char(27) .. "[0;31m",
-   R = string.char(27) .. "[1;31m",
+   r = COLOR_ESC .. "[0;31m",
+   R = COLOR_ESC .. "[1;31m",
 }
 
 ---------------------------------------------
@@ -194,7 +195,7 @@ function B.colorize( str )
    str = str:gsub( COLOR_CHAR .. "(.)", function( c )
       return color_tab[c] or c
    end )
-   return str .. string.char(27) .. "[0m"
+   return str .. COLOR_ESC .. "[0m"
 end
 
 return B
